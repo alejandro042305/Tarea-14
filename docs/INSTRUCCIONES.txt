@@ -1,0 +1,83 @@
+# Guía de Instrucciones NB-64
+# ====================================================================
+
+## INSTRUCCIONES DE 1 BYTE (Prefijo: 00)
+00000000 = NOP        (No operation)
+00000001 = HALT       (Detener CPU)
+00000010 = RET        (Retorno de subrutina)
+00000011 = IRET       (Retorno de interrupción)
+
+## INSTRUCCIONES DE 2 BYTES (Prefijo: 01)
+Formato: [01][id 5b][params 9b]
+
+0100000 + [Ra:4b][Rb:4b][pad:1b] = MOV Rx, Ry
+0100001 + [Ra:4b][Rb:4b][pad:1b] = XCHG Rx, Ry (intercambiar)
+0100010 + [Ra:4b][0000][pad:1b]   = PUSH Ra
+0100011 + [Ra:4b][0000][pad:1b]   = POP Ra
+0100100 + [Ra:4b][Rb:4b][pad:1b] = ADD Rx, Ry
+0100101 + [Ra:4b][Rb:4b][pad:1b] = SUB Rx, Ry
+0100110 + [Ra:4b][Rb:4b][pad:1b] = MUL Rx, Ry
+0100111 + [Ra:4b][Rb:4b][pad:1b] = DIV Rx, Ry
+0101000 + [Ra:4b][Rb:4b][pad:1b] = ADC Rx, Ry (suma con carry)
+0101001 + [Ra:4b][Rb:4b][pad:1b] = SBB Rx, Ry (resta con borrow)
+0101010 + [Ra:4b][0000][pad:1b]   = INC Ra
+0101011 + [Ra:4b][0000][pad:1b]   = DEC Ra
+0101100 + [Ra:4b][0000][pad:1b]   = NEG Ra (negación)
+0101101 + [Ra:4b][Rb:4b][pad:1b] = AND Rx, Ry
+0101110 + [Ra:4b][Rb:4b][pad:1b] = XOR Rx, Ry
+0101111 + [Ra:4b][Rb:4b][pad:1b] = XORA Rx, Ry (XNOR)
+0110000 + [Ra:4b][Rb:4b][pad:1b] = CMP Rx, Ry (comparar)
+0110001 + [Ra:4b][Rb:4b][pad:1b] = TEST Rx, Ry
+0110010 + [Ra:4b][0000][pad:1b]   = NOT Ra
+0110011 + [Ra:4b][0000][pad:1b]   = SHL Ra (shift left)
+0110100 + [Ra:4b][0000][pad:1b]   = SHR Ra (shift right)
+0110101 + [Ra:4b][0000][pad:1b]   = ROL Ra (rotate left)
+0110110 + [Ra:4b][0000][pad:1b]   = ROR Ra (rotate right)
+
+## INSTRUCCIONES DE 4 BYTES (Prefijo: 10)
+Formato: [10][id 5b][Ra:4b][Imm8:8b][pad:13b]
+
+1000000 + [Ra:4b][Imm8:8b][pad bits] = MOVI Ra, Imm8 (cargar inmediato)
+1000001 + [Ra:4b][Imm8:8b][pad bits] = ADDI Ra, Imm8 (sumar inmediato)
+1000010 + [Imm8:8b][pad bits]         = INT Imm8 (interrupción)
+
+## INSTRUCCIONES DE 8 BYTES (Prefijo: 11)
+Formato: [11][id 5b][params 57b]
+
+1100000 + [Dir:48b][pad:9b]           = JMP Dirección
+1100001 + [Dir:48b][pad:9b]           = JZ Dirección (saltar si cero)
+1100010 + [Dir:48b][pad:9b]           = JNZ Dirección (saltar si no cero)
+1100011 + [Dir:48b][pad:9b]           = JC Dirección (saltar si carry)
+1100100 + [Dir:48b][pad:9b]           = JNC Dirección (saltar si no carry)
+1100101 + [Dir:48b][pad:9b]           = CALL Dirección (llamar subrutina)
+1100110 + [Ra:4b][Dir:48b][pad:5b]    = MOV Ra, [Dir] (cargar desde memoria)
+1100111 + [Dir:48b][Ra:4b][pad:5b]    = MOV [Dir], Ra (guardar en memoria)
+1101000 + [Ra:4b][Dir:48b][pad:5b]    = LOAD Ra, [Dir]
+1101001 + [Ra:4b][Dir:48b][pad:5b]    = STORE Ra, [Dir]
+1101010 + [Ra:4b][Dir:48b][pad:5b]    = LEA Ra, Dir (cargar dirección efectiva)
+
+## REGISTROS
+R0 – R7 (8 registros de 8 bits cada uno)
+PC       (Program Counter - 48 bits)
+SP       (Stack Pointer - 48 bits, inicia en 255)
+IR       (Instruction Register)
+
+## FLAGS (Banderas de condición)
+Z (Zero)     - Se activa si el resultado es 0
+C (Carry)    - Se activa si hay desbordamiento o borrow
+N (Negative) - Se activa si el resultado es negativo (bit 7 = 1)
+V (Overflow) - Se activa si hay desbordamiento de signo
+
+## EJEMPLOS DE USO
+
+### Suma de dos números:
+10000000 00000101 00000000 00000000   # MOVI R0, 5
+10000000 00010011 00000000 00000000   # MOVI R1, 3
+01001000 00000010                     # ADD R0, R1 (R0 = 8)
+00000001                              # HALT
+
+### Incrementar un registro:
+10000000 00000000 00000000 00000000   # MOVI R0, 0
+01010100 00000000                     # INC R0 (R0 = 1)
+01010100 00000000                     # INC R0 (R0 = 2)
+00000001                              # HALT

@@ -1,0 +1,83 @@
+📦 NB-64 COMPUTER SIMULATOR - ESTRUCTURA DEL PROYECTO
+
+NB64 COMPU/
+├── README.md ...................... Este archivo
+├── src/ ........................... Código Python
+│   ├── main_gui.py ................ Punto de entrada (ejecutar esto)
+│   ├── gui.py ..................... Interfaz gráfica
+│   ├── computer.py ................ Integración componentes
+│   ├── cpu_core.py ................ CPU Fetch-Decode-Execute
+│   ├── ram.py ..................... Memoria RAM
+│   ├── registers.py ............... Registros
+│   ├── instructions.py ............ 30+ instrucciones
+│   └── loader.py .................. Cargador de programas
+│
+├── programs/ ...................... Programas binarios
+│   ├── examples/ .................. 8 programas de ejemplo
+│   │   ├── suma.txt (5+3=8)
+│   │   ├── multiplicacion.txt (4×6=24)
+│   │   ├── division.txt (16÷4=4)
+│   │   ├── incrementos.txt
+│   │   ├── contador.txt
+│   │   ├── prueba_completa.txt
+│   │   ├── operaciones_logicas.txt
+│   │   └── halt.txt
+│   │
+│   └── user_programs/ ............. Tu espacio para nuevos programas
+│
+└── docs/ .......................... Documentación
+    ├── INSTRUCCIONES.txt .......... Referencia de opcodes
+    ├── README.txt ................. Info general
+    └── README.md .................. Índice
+
+========================================================================
+🚀 PARA EMPEZAR:
+
+1. python src/main_gui.py
+2. Click "Cargar Programa"
+3. Selecciona programs/examples/suma.txt
+4. Click "Step" 4 veces
+
+========================================================================
+📚 DOCUMENTACIÓN INTERNA:
+
+src/README.md ..................... Descripción de módulos Python
+programs/README.md ................ Cómo cargar programas
+programs/examples/README.md ....... Guía de cada ejemplo
+programs/user_programs/README.md . Cómo crear tus propios programas
+docs/README.md .................... Índice de documentación
+
+========================================================================
+✨ CONTENIDO:
+
+• 8 módulos Python (~600 líneas)
+• 8 programas binarios de ejemplo
+• 30+ instrucciones
+• 6 documentos markdown
+• 3 documentos txt
+• 256 bytes RAM
+• 8 registros generales
+• 4 flags
+• 100% funcional
+
+========================================================================
+🎯 ORDEN RECOMENDADO:
+
+Para Principiantes:
+  1. Lee README.md
+  2. Ejecuta: python src/main_gui.py
+  3. Carga suma.txt y usa Step
+  4. Lee programs/examples/README.md
+
+Para Programar:
+  1. Lee programs/user_programs/README.md
+  2. Copia suma.txt como plantilla
+  3. Modifica valores
+  4. Carga en GUI
+
+Para Entender Código:
+  1. Lee src/README.md
+  2. Abre main_gui.py
+  3. Consulta docs/INSTRUCCIONES.txt
+
+========================================================================
