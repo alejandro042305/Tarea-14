@@ -1,11 +1,3 @@
-# loader.py – Cargador de programas
-#
-# CORRECCIÓN (Bug #4):
-#   El bucle anterior usaba enumerate(f) que contaba TODAS las líneas,
-#   incluyendo comentarios y líneas vacías. Esto causaba huecos en la RAM
-#   porque el índice avanzaba aunque la línea fuera saltada.
-#   Solución: usar un contador separado que solo avanza en líneas válidas.
-
 
 class Loader:
     def __init__(self, memory: list):
